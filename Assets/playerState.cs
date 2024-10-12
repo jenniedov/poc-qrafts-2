@@ -6,18 +6,14 @@ using UnityEngine.Playables; // Needed for PlayableDirector
 public class playerState : MonoBehaviour
 {
     public bool isPlayerPlaying = false;
-    public Record3DPlayback record3DPlayback;
+    public GameObject animator;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        if (record3DPlayback != null)
-        {
-            isPlayerPlaying = false;
-            record3DPlayback.Pause();
-        }
+
     }
 
     // Update is called once per frame
@@ -30,12 +26,14 @@ public class playerState : MonoBehaviour
     // This method will be called when the play button is clicked or touched
     public void OnPlayButtonClicked()
     {
-        if (record3DPlayback != null)
+        Debug.Log("Play button clicked");
+        if (animator != null)
         {
             if (!isPlayerPlaying)
             {
-                record3DPlayback.Play();
+                animator.SetActive(true);
                 isPlayerPlaying = true;
+                Debug.Log("Video started playing.");
             }
         }
     }
@@ -43,12 +41,14 @@ public class playerState : MonoBehaviour
     // This method will be called when the pause button is clicked or touched
     public void OnPauseButtonClicked()
     {
-        if (record3DPlayback != null)
+        Debug.Log("Pause button clicked");
+        if (animator != null)
         {
             if (isPlayerPlaying)
             {
-                record3DPlayback.Pause();
                 isPlayerPlaying = false;
+                animator.SetActive(false);
+                Debug.Log("Video paused.");
             }
         }
     }
