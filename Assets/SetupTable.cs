@@ -7,16 +7,55 @@ using Meta.XR.MRUtilityKit;
 public class SetupTable : MonoBehaviour
 {
     MRUKAnchor closestAnchor;
-    public LabelFilter tableLabelFilter;  // Changed type and default value
+    public LabelFilter tableLabelFilter;
     public float distance = 0.0f;
+
+    public bool isSetup = false;
+
     // Find the nearest table and set the position and rotation of this object to match the table
     void Start()
     {
-        // Get the current room
+        if (MRUK.Instance == null)
+        {
+            Debug.LogError("MRUK.Instance is null. Make sure MRUK is properly initialized.");
+            return;
+        }
+    }
+
+    // Update is called once per frame (currently not used)
+    void Update()
+    {
+        if (!isSetup)
+        {
+            FindTable();
+        }
+    }
+
+    void FindTable()
+    {
+        if (MRUK.Instance == null)
+        {
+            Debug.LogError("MRUK.Instance is null. Make sure MRUK is properly initialized.");
+            return;
+        }
+
         MRUKRoom room = MRUK.Instance.GetCurrentRoom();
+        if (room == null)
+        {
+            Debug.Log("Current room is null. Make sure you're in a valid MRUK environment.");
+            return;
+        }
 
         Vector3 closestPosition;
-        distance = room.TryGetClosestSurfacePosition(transform.position, out closestPosition, out closestAnchor, tableLabelFilter);
+        try
+        {
+            distance = room.TryGetClosestSurfacePosition(transform.position, out closestPosition, out closestAnchor, tableLabelFilter);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Error calling TryGetClosestSurfacePosition: {e.Message}");
+            return;
+        }
         
         if (distance > 0)
         {
@@ -25,15 +64,12 @@ public class SetupTable : MonoBehaviour
 
             // Optionally, set the rotation to align with the closest surface's normal or custom logic
             transform.rotation = Quaternion.LookRotation(Vector3.up);
+            isSetup = true;
+            Debug.Log("Table found and setup.");
         }
         else
         {
             Debug.LogWarning("No closest surface (table) found in the scene.");
         }
-    }
-
-    // Update is called once per frame (currently not used)
-    void Update()
-    {
     }
 }
