@@ -8,4 +8,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/LiveStreaming.unity
     guid: 4ec4907ceac8746959bf12b50347dfd7
-  m_configObjects: {}
+  m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: c49d08bbc1986354a812f4bd83cac062,
+      type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 91c269bb77e7ffb4883048d025aa3d23,
+      type: 2}
