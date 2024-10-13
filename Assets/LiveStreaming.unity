@@ -4534,7 +4534,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayerPlaying: 0
-  animator: {fileID: 1428102301}
+  animatorGO: {fileID: 1428102301}
 --- !u!1 &358684958
 GameObject:
   m_ObjectHideFlags: 0

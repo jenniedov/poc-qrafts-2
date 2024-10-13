@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables; // Needed for PlayableDirector
 
+
+
 public class playerState : MonoBehaviour
 {
     public bool isPlayerPlaying = false;
-    public GameObject animator;
-
-
+    public GameObject animatorGO;
+    private PlayableDirector director;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        director = animatorGO.GetComponent<PlayableDirector>();
+        director.Stop();
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -27,27 +28,26 @@ public class playerState : MonoBehaviour
     public void OnPlayButtonClicked()
     {
         Debug.Log("Play button clicked");
-        if (animator != null)
+        if (director != null)
         {
             if (!isPlayerPlaying)
             {
-                animator.SetActive(true);
+                director.Play();
                 isPlayerPlaying = true;
                 Debug.Log("Video started playing.");
             }
         }
     }
 
-    // This method will be called when the pause button is clicked or touched
     public void OnPauseButtonClicked()
     {
         Debug.Log("Pause button clicked");
-        if (animator != null)
+        if (director != null)
         {
             if (isPlayerPlaying)
             {
                 isPlayerPlaying = false;
-                animator.SetActive(false);
+                director.Pause();
                 Debug.Log("Video paused.");
             }
         }
